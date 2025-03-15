@@ -1,4 +1,4 @@
-package ru.axiomatika.creditsystem;
+package ru.axiomatika.creditsystem.entity;
 
 import jakarta.persistence.*;
 
