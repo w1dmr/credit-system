@@ -53,8 +53,8 @@
         <label>Паспортные данные: <input type="text" th:field="*{passportData}" required></label>
         <label>Семейное положение:
             <select th:field="*{maritalStatus}">
-                <option value="single">Холост/не замужем</option>
-                <option value="married">Женат/замужем</option>
+                <option value="Холост/Не замужем">Холост/Не замужем</option>
+                <option value="Женат/Замужем">Женат/Замужем</option>
             </select>
         </label>
         <label>Адрес прописки: <input type="text" th:field="*{address}" required></label>
@@ -62,7 +62,7 @@
         <label>Название организации: <input type="text" th:field="*{organizationName}"></label>
         <label>Должность: <input type="text" th:field="*{jobTitle}"></label>
         <label>Период работы (в месяцах): <input type="number" th:field="*{employmentPeriod}"></label>
-        <label>Сумма кредита: <input type="number" th:field="*{desiredLoanAmount}" step="0.01" required></label>
+        <label>Сумма кредита: <input type="number" name="desiredLoanAmount" step="0.01" required></label>
         <button type="submit">Отправить заявку</button>
     </form>
 </div>

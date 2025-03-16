@@ -36,7 +36,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Transactional(readOnly = true)
     @Override
-    public Client getClientByPhone(String phone) {
+    public List<Client> getClientsByPhone(String phone) {
         return clientDao.getByPhone(phone);
     }
 
@@ -48,11 +48,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Transactional(readOnly = true)
     @Override
-    public Client getClientByFullName(String fullName) {
-        String[] parts = fullName.split("\\s+");
-        String firstName = parts.length > 0 ? parts[0] : "";
-        String lastName = parts.length > 1 ? parts[1] : "";
-        String middleName = parts.length > 2 ? parts[2] : null;
+    public List<Client> getClientsByFullName(String firstName, String lastName, String middleName) {
         return clientDao.getByFullName(firstName, lastName, middleName);
     }
 }

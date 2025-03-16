@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список клиентов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .options {
+            margin-bottom: 20px;
+        }
+
+        a, button {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            background: blue;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        a:hover, button:hover {
+            background: darkblue;
+        }
+
+        form {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Список клиентов</h1>
+
+    <div class="options">
+        <a href="/clients/all">Вывести всех клиентов</a>
+    </div>
+
+    <form action="/clients/search" method="post">
+        <label>Поиск по телефону: <input type="tel" name="phone"></label>
+        <label>Поиск по фамилии: <input type="text" name="lastName"></label>
+        <label>Поиск по имени: <input type="text" name="firstName"></label>
+        <label>Поиск по отчеству: <input type="text" name="middleName"></label>
+        <label>Поиск по паспортным данным: <input type="text" name="passportData"></label>
+        <button type="submit">Найти</button>
+    </form>
+
+    <div th:if="${clients != null and not #lists.isEmpty(clients)}">
+        <table>
+            <thead>
+            <tr>
+                <th>ФИО</th>
+                <th>Паспортные данные</th>
+                <th>Семейное положение</th>
+                <th>Адрес прописки</th>
+                <th>Телефон</th>
+                <th>Название организации</th>
+                <th>Должность</th>
+                <th>Период работы (месяцы)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="client : ${clients}">
+                <td th:text="${client.lastName + ' ' + client.firstName + ' ' + (client.middleName != null ? client.middleName : '')}"></td>
+                <td th:text="${client.passportData}"></td>
+                <td th:text="${client.maritalStatus}"></td>
+                <td th:text="${client.address}"></td>
+                <td th:text="${client.phone}"></td>
+                <td th:text="${client.organizationName != null ? client.organizationName : '-'}"></td>
+                <td th:text="${client.jobTitle != null ? client.jobTitle : '-'}"></td>
+                <td th:text="${client.employmentPeriod != null ? client.employmentPeriod : '-'}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/">Вернуться на главную</a>
+</div>
+</body>
+</html>

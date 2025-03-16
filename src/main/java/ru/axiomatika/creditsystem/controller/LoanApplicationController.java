@@ -6,12 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.axiomatika.creditsystem.entity.Client;
 import ru.axiomatika.creditsystem.entity.LoanApplication;
 import ru.axiomatika.creditsystem.entity.LoanContract;
 import ru.axiomatika.creditsystem.service.impl.ClientServiceImpl;
 import ru.axiomatika.creditsystem.service.impl.LoanApplicationServiceImpl;
 import ru.axiomatika.creditsystem.service.impl.LoanContractServiceImpl;
+
+import java.math.BigDecimal;
 
 @Controller
 public class LoanApplicationController {
@@ -35,7 +38,10 @@ public class LoanApplicationController {
 
     @PostMapping("/loan-application")
     @Transactional
-    public String createLoanApplication(@ModelAttribute("client") Client client, Model model) {
+    public String createLoanApplication(
+            @ModelAttribute("client") Client client,
+            @RequestParam("desiredLoanAmount") BigDecimal desiredLoanAmount,
+            Model model) {
         // Проверяем, существует ли клиент с такими паспортными данными
         Client existingClient = clientService.getClientByPassport(client.getPassportData());
 
@@ -50,6 +56,7 @@ public class LoanApplicationController {
         // Создаём новую заявку на кредит
         LoanApplication loanApplication = new LoanApplication();
         loanApplication.setClient(client);
+        loanApplication.setDesiredLoanAmount(desiredLoanAmount);
         loanApplicationService.applyForLoan(loanApplication); // Логика принятия решения
         loanApplicationService.saveLoanApplication(loanApplication);
 

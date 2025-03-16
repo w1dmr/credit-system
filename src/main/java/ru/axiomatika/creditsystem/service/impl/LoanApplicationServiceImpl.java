@@ -6,6 +6,8 @@ import ru.axiomatika.creditsystem.dao.LoanApplicationDao;
 import ru.axiomatika.creditsystem.entity.LoanApplication;
 import ru.axiomatika.creditsystem.service.LoanApplicationService;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Random;
 
@@ -32,13 +34,19 @@ public class LoanApplicationServiceImpl implements LoanApplicationService {
 
         if (isApproved) {
             loanApplication.setStatus("Одобрен");
-            loanApplication.setApprovedAmount(loanApplication.getClient().getDesiredLoanAmount());
-            // Случайный срок от 6 до 36 месяцев
-            loanApplication.setApprovedTermMonths(random.nextInt(31) + 6); // 31 = 36 - 6 + 1
+            // Одобряем сумму: от 50% до 100% от желаемой суммы
+            BigDecimal approvalPercentage = BigDecimal.valueOf(0.5 + (random.nextDouble() * 0.5)); // 50-100%
+            loanApplication.setApprovedAmount(
+                    loanApplication.getDesiredLoanAmount()
+                            .multiply(approvalPercentage)
+                            .setScale(2, RoundingMode.HALF_UP) // Округляем до 2 знаков
+            );
+            // Случайный срок от 1 до 12 месяцев
+            loanApplication.setApprovedTermMonths(random.nextInt(12) + 1); // 1-12 месяцев
         } else {
             loanApplication.setStatus("Отклонён");
-            loanApplication.setApprovedAmount(null);
-            loanApplication.setApprovedTermMonths(null);
+            loanApplication.setApprovedAmount(BigDecimal.ZERO); // Устанавливаем 0 вместо null
+            loanApplication.setApprovedTermMonths(0);
         }
     }
 

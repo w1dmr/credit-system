@@ -11,9 +11,9 @@ public interface ClientService {
 
     List<Client> getAllClients();
 
-    Client getClientByPhone(String phone);
+    List<Client> getClientsByPhone(String phone);
 
     Client getClientByPassport(String passportData);
 
-    Client getClientByFullName(String fullName);
+    List<Client> getClientsByFullName(String firstName, String lastName, String middleName);
 }

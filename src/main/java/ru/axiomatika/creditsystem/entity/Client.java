@@ -39,9 +39,6 @@ public class Client {
     @Column(name = "employment_period")
     private Integer employmentPeriod;
 
-    @Column(name = "desired_loan_amount", precision = 19, scale = 2)
-    private BigDecimal desiredLoanAmount;
-
     // Геттеры и сеттеры
     public Long getId() {
         return id;
@@ -131,16 +128,20 @@ public class Client {
         this.employmentPeriod = employmentPeriod;
     }
 
-    public BigDecimal getDesiredLoanAmount() {
-        return desiredLoanAmount;
-    }
-
-    public void setDesiredLoanAmount(BigDecimal desiredLoanAmount) {
-        this.desiredLoanAmount = desiredLoanAmount;
-    }
-
     @Override
     public String toString() {
-        return "Client{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", middleName='" + middleName + '\'' + ", passportData='" + passportData + '\'' + ", maritalStatus='" + maritalStatus + '\'' + ", address='" + address + '\'' + ", phone='" + phone + '\'' + ", jobTitle='" + jobTitle + '\'' + ", organizationName='" + organizationName + '\'' + ", employmentPeriod=" + employmentPeriod + ", desiredLoanAmount=" + desiredLoanAmount + '}';
+        return "Client{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", passportData='" + passportData + '\'' +
+                ", maritalStatus='" + maritalStatus + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", organizationName='" + organizationName + '\'' +
+                ", employmentPeriod=" + employmentPeriod +
+                '}';
     }
 }

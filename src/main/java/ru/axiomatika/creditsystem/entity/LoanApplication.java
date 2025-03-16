@@ -23,6 +23,9 @@ public class LoanApplication {
     @Column(name = "approved_amount", precision = 19, scale = 2)
     private BigDecimal approvedAmount;
 
+    @Column(name = "desired_loan_amount", precision = 19, scale = 2)
+    private BigDecimal desiredLoanAmount;
+
     public Long getId() {
         return id;
     }
@@ -63,6 +66,14 @@ public class LoanApplication {
         this.approvedAmount = approvedAmount;
     }
 
+    public BigDecimal getDesiredLoanAmount() {
+        return desiredLoanAmount;
+    }
+
+    public void setDesiredLoanAmount(BigDecimal desiredLoanAmount) {
+        this.desiredLoanAmount = desiredLoanAmount;
+    }
+
     @Override
     public String toString() {
         return "LoanApplication{" +
@@ -71,6 +82,7 @@ public class LoanApplication {
                 ", status='" + status + '\'' +
                 ", approvedTermMonths=" + approvedTermMonths +
                 ", approvedAmount=" + approvedAmount +
+                ", desiredLoanAmount=" + desiredLoanAmount +
                 '}';
     }
 }
