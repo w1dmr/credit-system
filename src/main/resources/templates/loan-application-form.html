@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заявки на кредит</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        form {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Оформление заявки на кредит</h2>
+    <form action="/loan-application" method="post" th:object="${client}">
+        <label>Фамилия: <input type="text" th:field="*{lastName}" required></label>
+        <label>Имя: <input type="text" th:field="*{firstName}" required></label>
+        <label>Отчество: <input type="text" th:field="*{middleName}"></label>
+        <label>Паспортные данные: <input type="text" th:field="*{passportData}" required></label>
+        <label>Семейное положение:
+            <select th:field="*{maritalStatus}">
+                <option value="single">Холост/не замужем</option>
+                <option value="married">Женат/замужем</option>
+            </select>
+        </label>
+        <label>Адрес прописки: <input type="text" th:field="*{address}" required></label>
+        <label>Телефон: <input type="tel" th:field="*{phone}" required></label>
+        <label>Название организации: <input type="text" th:field="*{organizationName}"></label>
+        <label>Должность: <input type="text" th:field="*{jobTitle}"></label>
+        <label>Период работы (в месяцах): <input type="number" th:field="*{employmentPeriod}"></label>
+        <label>Сумма кредита: <input type="number" th:field="*{desiredLoanAmount}" step="0.01" required></label>
+        <button type="submit">Отправить заявку</button>
+    </form>
+</div>
+</body>
+</html>

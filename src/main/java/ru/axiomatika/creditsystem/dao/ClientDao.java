@@ -1,11 +1,8 @@
 package ru.axiomatika.creditsystem.dao;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import ru.axiomatika.creditsystem.entity.Client;
 import ru.axiomatika.creditsystem.util.HibernateUtil;
-
-import java.util.List;
 
 public class ClientDao extends AbstractDao<Client> {
     public ClientDao() {

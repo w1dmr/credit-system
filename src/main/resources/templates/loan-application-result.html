@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результат</title>
+</head>
+<body>
+<h2 th:text="${message}"></h2>
+<h3>Данные клиента:</h3>
+<p>Фамилия: <span th:text="${client.lastName}"></span></p>
+<p>Имя: <span th:text="${client.firstName}"></span></p>
+<p>Отчество: <span th:text="${client.middleName}"></span></p>
+<p>Паспортные данные: <span th:text="${client.passportData}"></span></p>
+<p>Семейное положение: <span th:text="${client.maritalStatus}"></span></p>
+<p>Адрес прописки: <span th:text="${client.address}"></span></p>
+<p>Телефон: <span th:text="${client.phone}"></span></p>
+<p>Название организации: <span th:text="${client.organizationName}"></span></p>
+<p>Должность: <span th:text="${client.jobTitle}"></span></p>
+<p>Период работы: <span th:text="${client.employmentPeriod}"></span></p>
+<p>Сумма кредита: <span th:text="${client.desiredLoanAmount}"></span></p>
+<a href="/loan-application">Вернуться к форме</a>
+</body>
+</html>

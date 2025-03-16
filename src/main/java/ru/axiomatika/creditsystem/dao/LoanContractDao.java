@@ -1,8 +1,6 @@
 package ru.axiomatika.creditsystem.dao;
 
 import org.hibernate.Session;
-import ru.axiomatika.creditsystem.entity.Client;
-import ru.axiomatika.creditsystem.entity.LoanApplication;
 import ru.axiomatika.creditsystem.entity.LoanContract;
 import ru.axiomatika.creditsystem.util.HibernateUtil;
 
