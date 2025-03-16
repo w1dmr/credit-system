@@ -6,71 +6,177 @@
     <title>Список клиентов</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            min-height: 100vh;
         }
 
         .container {
             max-width: 1200px;
-            margin: auto;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
             text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .options {
             margin-bottom: 20px;
+            text-align: center;
         }
 
         a, button {
             display: inline-block;
             margin: 10px;
-            padding: 10px;
-            background: blue;
+            padding: 12px 20px;
+            background: #3498db;
             color: white;
             text-decoration: none;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         a:hover, button:hover {
-            background: darkblue;
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        a:active, button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         form {
             margin: 20px 0;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f9fbfc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         label {
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
+            color: #2c3e50;
+            font-weight: 500;
         }
 
         input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
 
         th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
+            border: 1px solid #e0e0e0;
+            padding: 12px;
             text-align: left;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9fbfc;
+        }
+
+        tr:hover td {
+            background-color: #eef2f7;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            a, button {
+                padding: 10px 15px;
+                font-size: 1em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            form {
+                padding: 15px;
+            }
+
+            input {
+                padding: 8px;
+            }
         }
     </style>
 </head>

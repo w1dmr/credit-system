@@ -14,6 +14,12 @@ public class LoanContractDao extends AbstractDao<LoanContract> {
 
     public List<LoanContract> getSignedContracts() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM LoanContract WHERE signatureStatus = 'Подписан'", LoanContract.class).list();
+        return session.createQuery(
+                "SELECT lc FROM LoanContract lc " +
+                        "JOIN FETCH lc.loanApplication la " +
+                        "JOIN FETCH la.client " +
+                        "WHERE lc.signatureStatus = 'Подписан'",
+                LoanContract.class
+        ).list();
     }
 }

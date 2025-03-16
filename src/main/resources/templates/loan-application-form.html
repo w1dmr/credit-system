@@ -6,40 +6,127 @@
     <title>Оформление заявки на кредит</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .container {
             max-width: 600px;
-            margin: auto;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         form {
             margin-bottom: 20px;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f9fbfc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         label {
             display: block;
-            margin-top: 10px;
+            margin-top: 15px;
+            color: #2c3e50;
+            font-weight: 500;
         }
 
         input, select {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
         }
 
         button {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: blue;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #3498db;
             color: white;
             border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+
+            form {
+                padding: 15px;
+            }
+
+            input, select {
+                padding: 8px;
+            }
+
+            button {
+                padding: 10px 15px;
+                font-size: 1em;
+            }
         }
     </style>
 </head>

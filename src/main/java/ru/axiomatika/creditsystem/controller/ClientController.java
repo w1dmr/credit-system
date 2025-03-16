@@ -42,15 +42,22 @@ public class ClientController {
             @RequestParam(value = "middleName", required = false) String middleName,
             @RequestParam(value = "passportData", required = false) String passportData,
             Model model) {
+        // Очищаем все параметры от пробелов сразу
+        String trimmedPhone = phone != null ? phone.trim() : null;
+        String trimmedLastName = lastName != null ? lastName.trim() : null;
+        String trimmedFirstName = firstName != null ? firstName.trim() : null;
+        String trimmedMiddleName = middleName != null ? middleName.trim() : null;
+        String trimmedPassportData = passportData != null ? passportData.trim() : null;
+
         List<Client> clients;
-        if (phone != null && !phone.trim().isEmpty()) {
-            clients = clientService.getClientsByPhone(phone.trim());
-        } else if ((lastName != null && !lastName.trim().isEmpty()) ||
-                (firstName != null && !firstName.trim().isEmpty()) ||
-                (middleName != null && !middleName.trim().isEmpty())) {
-            clients = clientService.getClientsByFullName(firstName, lastName, middleName);
-        } else if (passportData != null && !passportData.trim().isEmpty()) {
-            Client client = clientService.getClientByPassport(passportData.trim());
+        if (trimmedPhone != null && !trimmedPhone.isEmpty()) {
+            clients = clientService.getClientsByPhone(trimmedPhone);
+        } else if ((trimmedLastName != null && !trimmedLastName.isEmpty()) ||
+                (trimmedFirstName != null && !trimmedFirstName.isEmpty()) ||
+                (trimmedMiddleName != null && !trimmedMiddleName.isEmpty())) {
+            clients = clientService.getClientsByFullName(trimmedFirstName, trimmedLastName, trimmedMiddleName);
+        } else if (trimmedPassportData != null && !trimmedPassportData.isEmpty()) {
+            Client client = clientService.getClientByPassport(trimmedPassportData);
             clients = client != null ? List.of(client) : List.of();
         } else {
             clients = clientService.getAllClients();
