@@ -1,20 +1,19 @@
 package ru.axiomatika.creditsystem.dao;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 import ru.axiomatika.creditsystem.entity.LoanContract;
-import ru.axiomatika.creditsystem.util.HibernateUtil;
 
 import java.util.List;
 
+@Repository
 public class LoanContractDao extends AbstractDao<LoanContract> {
     public LoanContractDao() {
         super(LoanContract.class);
     }
 
-    // Получение всех подписанных кредитных договоров
     public List<LoanContract> getSignedContracts() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM LoanContract WHERE signatureStatus = 'Подписан'", LoanContract.class).list();
-        }
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM LoanContract WHERE signatureStatus = 'Подписан'", LoanContract.class).list();
     }
 }

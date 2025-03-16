@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Договор подписан</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .success {
+            color: green;
+            font-size: 24px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px;
+            background: blue;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background: darkblue;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="success">Договор успешно подписан!</h1>
+    <div class="info">
+        <p>Номер договора: <span th:text="${loanContract.id}"></span></p>
+        <p>Номер заявки: <span th:text="${loanContract.loanApplication.id}"></span></p>
+        <p>Клиент: <span
+                th:text="${loanContract.loanApplication.client.firstName + ' ' + loanContract.loanApplication.client.lastName}"></span>
+        </p>
+        <p>Одобренная сумма: <span th:text="${loanContract.loanApplication.approvedAmount}"></span></p>
+        <p>Срок кредита: <span th:text="${loanContract.loanApplication.approvedTermMonths}"></span> месяцев</p>
+        <p>Дата подписания: <span th:text="${loanContract.contractDate}"></span></p>
+        <p>Статус: <span th:text="${loanContract.signatureStatus}"></span></p>
+    </div>
+    <a href="/">Вернуться на главную страницу</a>
+</div>
+</body>
+</html>

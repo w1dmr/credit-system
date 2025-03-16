@@ -43,6 +43,14 @@ public class Client {
     private BigDecimal desiredLoanAmount;
 
     // Геттеры и сеттеры
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -131,25 +139,8 @@ public class Client {
         this.desiredLoanAmount = desiredLoanAmount;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     @Override
     public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", passportData='" + passportData + '\'' +
-                ", maritalStatus='" + maritalStatus + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", jobTitle='" + jobTitle + '\'' +
-                ", organizationName='" + organizationName + '\'' +
-                ", employmentPeriod=" + employmentPeriod +
-                ", desiredLoanAmount=" + desiredLoanAmount +
-                '}';
+        return "Client{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", middleName='" + middleName + '\'' + ", passportData='" + passportData + '\'' + ", maritalStatus='" + maritalStatus + '\'' + ", address='" + address + '\'' + ", phone='" + phone + '\'' + ", jobTitle='" + jobTitle + '\'' + ", organizationName='" + organizationName + '\'' + ", employmentPeriod=" + employmentPeriod + ", desiredLoanAmount=" + desiredLoanAmount + '}';
     }
 }

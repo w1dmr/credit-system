@@ -21,6 +21,14 @@ public class LoanContract {
     @Column(name = "signature_status", nullable = false)
     private String signatureStatus;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public LoanApplication getLoanApplication() {
         return loanApplication;
     }
@@ -43,10 +51,6 @@ public class LoanContract {
 
     public void setSignatureStatus(String signatureStatus) {
         this.signatureStatus = signatureStatus;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     @Override

@@ -5,7 +5,9 @@ import ru.axiomatika.creditsystem.entity.LoanContract;
 import java.util.List;
 
 public interface LoanContractService {
-    void signContract(LoanContract contract);
+    void saveContract(LoanContract contract); // Новый метод для сохранения
+
+    void signContract(LoanContract contract); // Существующий метод для подписания
 
     LoanContract getContractById(Long id);
 
