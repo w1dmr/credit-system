@@ -16,4 +16,7 @@ public interface ClientService {
     Client getClientByPassport(String passportData);
 
     List<Client> getClientsByFullName(String firstName, String lastName, String middleName);
+
+    // Новый метод для поиска с учётом всех параметров
+    List<Client> searchClients(String phone, String lastName, String firstName, String middleName, String passportData);
 }

@@ -2,6 +2,7 @@ package ru.axiomatika.creditsystem.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import ru.axiomatika.creditsystem.dao.LoanContractDao;
 import ru.axiomatika.creditsystem.entity.LoanContract;
 import ru.axiomatika.creditsystem.service.LoanContractService;
@@ -20,7 +21,7 @@ public class LoanContractServiceImpl implements LoanContractService {
     @Transactional
     @Override
     public void saveContract(LoanContract contract) {
-        loanContractDao.save(contract); // Просто сохраняем контракт
+        loanContractDao.save(contract);
     }
 
     @Transactional
@@ -28,8 +29,8 @@ public class LoanContractServiceImpl implements LoanContractService {
     public void signContract(LoanContract contract) {
         if ("Не подписан".equals(contract.getSignatureStatus())) {
             contract.setSignatureStatus("Подписан");
-            contract.setContractDate(LocalDate.now()); // Обновляем дату при подписании
-            loanContractDao.save(contract); // Сохраняем изменения после подписания
+            contract.setContractDate(LocalDate.now());
+            loanContractDao.save(contract);
         }
     }
 
@@ -49,5 +50,17 @@ public class LoanContractServiceImpl implements LoanContractService {
     @Override
     public List<LoanContract> getAllContracts() {
         return loanContractDao.getAll();
+    }
+
+    @Transactional
+    @Override
+    public String processContractSigning(Long contractId, Model model) {
+        LoanContract loanContract = getContractById(contractId);
+        if (loanContract != null && "Не подписан".equals(loanContract.getSignatureStatus())) {
+            signContract(loanContract);
+            model.addAttribute("loanContract", loanContract);
+            return "contract-signed";
+        }
+        return "error";
     }
 }
