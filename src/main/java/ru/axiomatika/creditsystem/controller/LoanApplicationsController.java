@@ -14,14 +14,18 @@ import java.util.List;
 public class LoanApplicationsController {
     private final LoanApplicationServiceImpl loanApplicationService;
 
+    // Внедрение зависимости через конструктор
     public LoanApplicationsController(LoanApplicationServiceImpl loanApplicationService) {
         this.loanApplicationService = loanApplicationService;
     }
 
+    // Показ списка одобренных заявок на кредит
     @GetMapping
     public String showApprovedApplications(Model model) {
+        // Получение списка одобренных заявок на кредит
         List<LoanApplication> applications = loanApplicationService.getApprovedApplications();
+        // Добавление списка заявок в модель
         model.addAttribute("loanApplications", applications);
-        return "loan-applications";
+        return "loan-applications"; // Возвращает представление с заявками на кредит
     }
 }

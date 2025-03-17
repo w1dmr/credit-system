@@ -18,11 +18,12 @@ import java.util.Random;
 
 @Service
 public class LoanApplicationServiceImpl implements LoanApplicationService {
-    private final LoanApplicationDao loanApplicationDao;
-    private final ClientService clientService; // Добавляем зависимость
-    private final LoanContractService loanContractService; // Добавляем зависимость
-    private final Random random = new Random();
+    private final LoanApplicationDao loanApplicationDao;    // Зависимость для взаимодействия с DAO для заявок на кредиты
+    private final ClientService clientService;  // Зависимость для взаимодействия с сервисом клиентов
+    private final LoanContractService loanContractService;  // Зависимость для взаимодействия с сервисом кредитных договоров
+    private final Random random = new Random(); // Для случайных операций (одобрения заявки)
 
+    // Конструктор для инициализации всех зависимостей
     public LoanApplicationServiceImpl(LoanApplicationDao loanApplicationDao,
                                       ClientService clientService,
                                       LoanContractService loanContractService) {
@@ -34,46 +35,47 @@ public class LoanApplicationServiceImpl implements LoanApplicationService {
     @Transactional
     @Override
     public void saveLoanApplication(LoanApplication loanApplication) {
-        loanApplicationDao.save(loanApplication);
+        loanApplicationDao.save(loanApplication);   // Сохраняем заявку на кредит в базу данных
     }
 
     @Transactional
     @Override
     public void applyForLoan(LoanApplication loanApplication) {
+        // Логика принятия решения по кредитной заявке (случайное одобрение/отклонение)
         boolean isApproved = random.nextBoolean();
 
         if (isApproved) {
-            loanApplication.setStatus("Одобрен");
-            BigDecimal approvalPercentage = BigDecimal.valueOf(0.5 + (random.nextDouble() * 0.5));
+            loanApplication.setStatus("Одобрен");   // Устанавливаем статус заявки как "Одобрен"
+            BigDecimal approvalPercentage = BigDecimal.valueOf(0.5 + (random.nextDouble() * 0.5));  // Случайный процент одобрения
             loanApplication.setApprovedAmount(
                     loanApplication.getDesiredLoanAmount()
-                            .multiply(approvalPercentage)
-                            .setScale(2, RoundingMode.HALF_UP)
+                            .multiply(approvalPercentage)   // Рассчитываем одобренную сумму
+                            .setScale(2, RoundingMode.HALF_UP)  // Округляем до двух знаков после запятой
             );
-            loanApplication.setApprovedTermMonths(random.nextInt(12) + 1);
+            loanApplication.setApprovedTermMonths(random.nextInt(12) + 1);  // Случайный срок кредита (1-12 месяцев)
         } else {
-            loanApplication.setStatus("Отклонён");
-            loanApplication.setApprovedAmount(BigDecimal.ZERO);
-            loanApplication.setApprovedTermMonths(0);
+            loanApplication.setStatus("Отклонён");  // Устанавливаем статус заявки как "Отклонён"
+            loanApplication.setApprovedAmount(BigDecimal.ZERO); // Отклонённая заявка не получает одобренную сумму
+            loanApplication.setApprovedTermMonths(0);   // Отклонённая заявка не имеет срока кредита
         }
     }
 
     @Transactional(readOnly = true)
     @Override
     public LoanApplication getApplicationById(Long id) {
-        return loanApplicationDao.getById(id);
+        return loanApplicationDao.getById(id);  // Получаем заявку по ID
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<LoanApplication> getApprovedApplications() {
-        return loanApplicationDao.getApprovedApplications();
+        return loanApplicationDao.getApprovedApplications();    // Получаем все одобренные заявки
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<LoanApplication> getAllApplications() {
-        return loanApplicationDao.getAll();
+        return loanApplicationDao.getAll(); // Получаем все заявки
     }
 
     @Transactional
@@ -92,26 +94,26 @@ public class LoanApplicationServiceImpl implements LoanApplicationService {
 
         // Создаём новую заявку на кредит
         LoanApplication loanApplication = new LoanApplication();
-        loanApplication.setClient(client);
-        loanApplication.setDesiredLoanAmount(desiredLoanAmount);
-        applyForLoan(loanApplication); // Логика принятия решения
-        saveLoanApplication(loanApplication);
+        loanApplication.setClient(client);  // Устанавливаем клиента для заявки
+        loanApplication.setDesiredLoanAmount(desiredLoanAmount);    // Устанавливаем желаемую сумму кредита
+        applyForLoan(loanApplication);  // Применяем логику для принятия решения по заявке
+        saveLoanApplication(loanApplication);   // Сохраняем заявку в базе данных
 
         // Создаём черновик договора
         LoanContract loanContract = new LoanContract();
-        loanContract.setLoanApplication(loanApplication);
-        loanContract.setContractDate(java.time.LocalDate.now());
+        loanContract.setLoanApplication(loanApplication);   // Привязываем договор к заявке
+        loanContract.setContractDate(java.time.LocalDate.now());    // Устанавливаем текущую дату как дату заключения договора
 
         if ("Одобрен".equals(loanApplication.getStatus())) {
-            loanContract.setSignatureStatus("Не подписан");
-            loanContractService.saveContract(loanContract);
-            model.addAttribute("loanContract", loanContract);
-            return "loan-contract-sign"; // Перенаправляем на страницу подписания
+            loanContract.setSignatureStatus("Не подписан"); // Устанавливаем статус подписания как "Не подписан"
+            loanContractService.saveContract(loanContract); // Сохраняем договор
+            model.addAttribute("loanContract", loanContract);   // Добавляем договор в модель
+            return "loan-contract-sign";    // Перенаправляем на страницу для подписания договора
         } else {
-            loanContract.setSignatureStatus("Отклонён");
-            loanContractService.saveContract(loanContract);
-            model.addAttribute("loanContract", loanContract);
-            return "loan-rejected";
+            loanContract.setSignatureStatus("Отклонён");    // Если заявка отклонена, устанавливаем статус договора как "Отклонён"
+            loanContractService.saveContract(loanContract); // Сохраняем договор
+            model.addAttribute("loanContract", loanContract);   // Добавляем договор в модель
+            return "loan-rejected"; // Перенаправляем на страницу с информацией об отклонении заявки
         }
     }
 }

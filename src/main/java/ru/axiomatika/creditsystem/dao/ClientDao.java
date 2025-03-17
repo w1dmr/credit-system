@@ -9,28 +9,35 @@ import java.util.List;
 
 @Repository
 public class ClientDao extends AbstractDao<Client> {
+    // Конструктор, который вызывает конструктор родительского класса для задания типа сущности
     public ClientDao() {
         super(Client.class);
     }
 
+    // Метод для поиска клиентов по телефону
     public List<Client> getByPhone(String phone) {
         Session session = sessionFactory.getCurrentSession();
+        // Используем HQL (Hibernate Query Language) для запроса по номеру телефона
         Query<Client> query = session.createQuery("FROM Client WHERE phone = :phone", Client.class);
-        query.setParameter("phone", phone);
-        return query.list();
+        query.setParameter("phone", phone); // Устанавливаем параметр для поиска
+        return query.list();    // Возвращаем результат
     }
 
+    // Метод для поиска клиента по данным паспорта
     public Client getByPassportData(String passportData) {
         Session session = sessionFactory.getCurrentSession();
+        // Используем HQL для запроса по номеру паспорта (ожидаем уникальный результат)
         return session.createQuery("FROM Client WHERE passportData = :passportData", Client.class)
                 .setParameter("passportData", passportData)
                 .uniqueResult();
     }
 
+    // Метод для поиска клиентов по полному имени
     public List<Client> getByFullName(String firstName, String lastName, String middleName) {
         Session session = sessionFactory.getCurrentSession();
         StringBuilder hql = new StringBuilder("FROM Client WHERE 1=1");
 
+        // Добавляем условия в запрос, если параметры непустые
         if (lastName != null && !lastName.isEmpty()) {
             hql.append(" AND lower(lastName) = lower(:lastName)");
         }
@@ -41,8 +48,10 @@ public class ClientDao extends AbstractDao<Client> {
             hql.append(" AND lower(middleName) = lower(:middleName)");
         }
 
+        // Создаем запрос с динамическим HQL
         Query<Client> query = session.createQuery(hql.toString(), Client.class);
 
+        // Устанавливаем параметры для запроса, если они не пустые
         if (lastName != null && !lastName.isEmpty()) {
             query.setParameter("lastName", lastName);
         }
@@ -53,6 +62,6 @@ public class ClientDao extends AbstractDao<Client> {
             query.setParameter("middleName", middleName);
         }
 
-        return query.list();
+        return query.list();    // Возвращаем список клиентов
     }
 }

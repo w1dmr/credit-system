@@ -26,6 +26,7 @@ public class LoanApplication {
     @Column(name = "desired_loan_amount", precision = 19, scale = 2)
     private BigDecimal desiredLoanAmount;
 
+    // Геттеры и сеттеры для всех полей
     public Long getId() {
         return id;
     }

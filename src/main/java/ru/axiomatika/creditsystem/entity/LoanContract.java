@@ -21,6 +21,7 @@ public class LoanContract {
     @Column(name = "signature_status", nullable = false)
     private String signatureStatus;
 
+    // Геттеры и сеттеры для всех полей
     public Long getId() {
         return id;
     }

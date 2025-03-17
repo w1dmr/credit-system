@@ -29,6 +29,8 @@
     <properties>
         <java.version>23</java.version>
     </properties>
+
+    <!-- Зависимости для Spring Boot, Hibernate, PostgreSQL, Thymeleaf -->
     <dependencies>
 
         <dependency>

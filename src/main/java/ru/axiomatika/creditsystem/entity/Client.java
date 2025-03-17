@@ -2,8 +2,6 @@ package ru.axiomatika.creditsystem.entity;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
-
 @Entity
 @Table(name = "client")
 public class Client {
@@ -39,7 +37,7 @@ public class Client {
     @Column(name = "employment_period")
     private Integer employmentPeriod;
 
-    // Геттеры и сеттеры
+    // Геттеры и сеттеры для всех полей
     public Long getId() {
         return id;
     }
@@ -130,18 +128,6 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", passportData='" + passportData + '\'' +
-                ", maritalStatus='" + maritalStatus + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", jobTitle='" + jobTitle + '\'' +
-                ", organizationName='" + organizationName + '\'' +
-                ", employmentPeriod=" + employmentPeriod +
-                '}';
+        return "Client{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", middleName='" + middleName + '\'' + ", passportData='" + passportData + '\'' + ", maritalStatus='" + maritalStatus + '\'' + ", address='" + address + '\'' + ", phone='" + phone + '\'' + ", jobTitle='" + jobTitle + '\'' + ", organizationName='" + organizationName + '\'' + ", employmentPeriod=" + employmentPeriod + '}';
     }
 }

@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
+    // Обрабатывает GET-запрос на корневой URL "/"
     @GetMapping("/")
     public String home() {
-        return "index.html";
+        return "index.html";    // Возвращает шаблон "index.html"
     }
 }

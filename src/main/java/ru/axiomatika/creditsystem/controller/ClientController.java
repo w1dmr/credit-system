@@ -16,24 +16,28 @@ import java.util.List;
 public class ClientController {
     private final ClientServiceImpl clientService;
 
+    // Внедрение зависимостей через конструктор
     public ClientController(ClientServiceImpl clientService) {
         this.clientService = clientService;
     }
 
+    // Показ страницы списка клиентов
     @GetMapping
     public String showClientsPage(Model model) {
-        model.addAttribute("client", new Client());
-        return "clients";
+        model.addAttribute("client", new Client()); // Добавление нового объекта Client в модель
+        return "clients";   // Возвращает представление с формой для вывода информации о клиентах
     }
 
+    // Показ всех клиентов
     @GetMapping("/all")
     public String showAllClients(Model model) {
-        List<Client> clients = clientService.getAllClients();
-        model.addAttribute("clients", clients);
-        model.addAttribute("client", new Client());
-        return "clients";
+        List<Client> clients = clientService.getAllClients();   // Получение всех клиентов
+        model.addAttribute("clients", clients); // Добавление списка клиентов в модель
+        model.addAttribute("client", new Client()); // Добавление нового объекта Client в модель
+        return "clients";   // Возвращает представление с клиентами
     }
 
+    // Поиск клиентов
     @PostMapping("/search")
     public String searchClient(
             @RequestParam(value = "phone", required = false) String phone,
@@ -42,9 +46,10 @@ public class ClientController {
             @RequestParam(value = "middleName", required = false) String middleName,
             @RequestParam(value = "passportData", required = false) String passportData,
             Model model) {
+        // Выполняет поиск клиентов по указанным параметрам
         List<Client> clients = clientService.searchClients(phone, lastName, firstName, middleName, passportData);
-        model.addAttribute("clients", clients);
-        model.addAttribute("client", new Client());
-        return "clients";
+        model.addAttribute("clients", clients); // Добавление результатов поиска в модель
+        model.addAttribute("client", new Client()); // Добавление нового объекта Client в модель
+        return "clients";   // Возвращает представление с результатами поиска клиентов
     }
 }
