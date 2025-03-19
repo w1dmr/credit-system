@@ -64,4 +64,49 @@ public class ClientDao extends AbstractDao<Client> {
 
         return query.list();    // Возвращаем список клиентов
     }
+
+    // Метод для поиска клиентов по всем параметрам
+    public List<Client> searchClients(String phone, String lastName, String firstName, String middleName, String passportData) {
+        Session session = sessionFactory.getCurrentSession();
+        StringBuilder hql = new StringBuilder("FROM Client WHERE 1=1");
+
+        // Добавляем условия в запрос, если параметры непустые
+        if (phone != null && !phone.isEmpty()) {
+            hql.append(" AND phone = :phone");
+        }
+        if (lastName != null && !lastName.isEmpty()) {
+            hql.append(" AND lower(lastName) = lower(:lastName)");
+        }
+        if (firstName != null && !firstName.isEmpty()) {
+            hql.append(" AND lower(firstName) = lower(:firstName)");
+        }
+        if (middleName != null && !middleName.isEmpty()) {
+            hql.append(" AND lower(middleName) = lower(:middleName)");
+        }
+        if (passportData != null && !passportData.isEmpty()) {
+            hql.append(" AND passportData = :passportData");
+        }
+
+        // Создаем запрос с динамическим HQL
+        Query<Client> query = session.createQuery(hql.toString(), Client.class);
+
+        // Устанавливаем параметры для запроса, если они не пустые
+        if (phone != null && !phone.isEmpty()) {
+            query.setParameter("phone", phone);
+        }
+        if (lastName != null && !lastName.isEmpty()) {
+            query.setParameter("lastName", lastName);
+        }
+        if (firstName != null && !firstName.isEmpty()) {
+            query.setParameter("firstName", firstName);
+        }
+        if (middleName != null && !middleName.isEmpty()) {
+            query.setParameter("middleName", middleName);
+        }
+        if (passportData != null && !passportData.isEmpty()) {
+            query.setParameter("passportData", passportData);
+        }
+
+        return query.list(); // Возвращаем список клиентов
+    }
 }

@@ -63,18 +63,16 @@ public class ClientServiceImpl implements ClientService {
         String trimmedMiddleName = middleName != null ? middleName.trim() : null;
         String trimmedPassportData = passportData != null ? passportData.trim() : null;
 
-        // Логика для поиска клиентов на основе различных параметров
-        if (trimmedPhone != null && !trimmedPhone.isEmpty()) {
-            return getClientsByPhone(trimmedPhone); // Если есть номер телефона, ищем по телефону
-        } else if ((trimmedLastName != null && !trimmedLastName.isEmpty()) ||
-                (trimmedFirstName != null && !trimmedFirstName.isEmpty()) ||
-                (trimmedMiddleName != null && !trimmedMiddleName.isEmpty())) {
-            return getClientsByFullName(trimmedFirstName, trimmedLastName, trimmedMiddleName);  // Если есть хотя бы одно поле имени, ищем по полному имени
-        } else if (trimmedPassportData != null && !trimmedPassportData.isEmpty()) {
-            Client client = getClientByPassport(trimmedPassportData);   // Если есть данные паспорта, ищем по паспорту
-            return client != null ? List.of(client) : List.of();    // Если клиент найден, возвращаем его в списке, иначе пустой список
-        } else {
-            return getAllClients(); // Если нет параметров для поиска, возвращаем всех клиентов
+        // Если все параметры пустые, возвращаем всех клиентов
+        if ((trimmedPhone == null || trimmedPhone.isEmpty()) &&
+                (trimmedLastName == null || trimmedLastName.isEmpty()) &&
+                (trimmedFirstName == null || trimmedFirstName.isEmpty()) &&
+                (trimmedMiddleName == null || trimmedMiddleName.isEmpty()) &&
+                (trimmedPassportData == null || trimmedPassportData.isEmpty())) {
+            return getAllClients();
         }
+
+        // Используем метод DAO для поиска по всем полям
+        return clientDao.searchClients(trimmedPhone, trimmedLastName, trimmedFirstName, trimmedMiddleName, trimmedPassportData);
     }
 }
